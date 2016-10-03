@@ -1,4 +1,4 @@
-**Goals**:  Practice implementing one-to-many relationships between the cities and rentals from our ongoing Super-Rentals application, and the posts and comments in our two-day Blog project. 
+**Goals**:  Practice implementing one-to-many relationships between the rentals and reviews from our ongoing Super-Rentals application, and the posts and comments in our two-day Blog project. 
 
 ## Warm Up
 <hr>
@@ -12,11 +12,7 @@
 
 ### Property Rental Application
 
-Follow along with the previous night's homework to implement new features and concepts into our Super-Rentals application. Then, add the features described below. Make sure these features function correctly before moving on to the Blog project, as future lessons that build upon Super-Rentals will assume these elements are present.
-
-* Create a `city-tile` component to display a city's details, and list all rentals available in that city. 
-* Render it in the _city.hbs_ template. 
-* Make sure it contains an action to delete cities in its JavaScript file, and a button to trigger that action in its Handlebars template, and that the city route contains corresponding actions.
+Follow along with the previous night's homework to implement new features and concepts into our Super-Rentals application.
 
 <hr>
 

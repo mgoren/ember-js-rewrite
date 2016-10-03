@@ -11,7 +11,7 @@ $ ember g model review
 and define its attributes:
 
 <div class="filename">app/models/review.js</div>
-```
+```javascript
 import DS from 'ember-data';
 
 export default DS.Model.extend({
@@ -26,7 +26,7 @@ export default DS.Model.extend({
 However, in order to display both rentals and reviews on our index page, we will need to update the model hook on the `index` route handler to return two different types of objects:
 
 <div class="filename">app/routes/index.js</div>
-```
+```javascript
 …
 model() {
   return Ember.RSVP.hash({
@@ -52,7 +52,7 @@ For more information about how `RSVP.hash` works, visit the [Ember Guides ](http
 Our model now has rentals and reviews which can be referenced in the index template as `model.rentals` and `model.reviews`. This dot notation is necessary because our model now contains two separate arrays of items, and we need to specify which we'd like to return:
 
 <div class="filename">app/templates/index.hbs</div>
-```
+```html
 <h1> Welcome to Super Rentals </h1>
 
 We hope you find exactly what you're looking for in a place to stay.
@@ -65,7 +65,7 @@ We hope you find exactly what you're looking for in a place to stay.
   {{/each}}
 </ul>
 
-{{new-rental save2="save3"}}
+{{new-rental saveRental2="saveRental3"}}
 
 <h2> All Reviews </h2>
 
@@ -86,7 +86,6 @@ Our `index.hbs` template now shows a list of all rentals and all reviews. Howeve
 _(**Note**: Importing a new JSON file will overwrite the current contents of the database. This is normal.)_
 
 <div class="filename">rentals.json</div>
-
 ```javascript
 { "rentals": [{
     "owner": "Veruca Salt",
@@ -121,11 +120,125 @@ _(**Note**: Importing a new JSON file will overwrite the current contents of the
 
 We should now be able to see all the rentals and reviews listed on our index.
 
+## Creating a new review
+
+Now we need to create a `new-review` component. This component will be rendered in the index template, and will be responsible for creating new `review` objects through our application. Here we're just following the same process we used to create a new rental. **See if you can do it yourself before looking at the code below.** Use [previous lessons](https://www.learnhowtoprogram.com/javascript/ember-js/components-save-delete) and the existing `new-rental` component as guides.
+
+<div class="filename">app/templates/components/new-review.hbs</div>
+```html
+{{#if addNewReview}}
+<h1>New Review</h1>
+  <div>
+    <form>
+      <div class="form-group">
+        <label for="author">Author</label>
+        {{input value=author id="author"}}
+      </div>
+      <div class="form-group">
+        <label for="rating">Rating</label>
+        {{input value=rating id="rating"}}
+      </div>
+      <div class="form-group">
+        <label for="content">Content</label>
+        {{input value=content id="content"}}
+      </div>
+      <button {{action 'saveReview'}}>Save</button>
+    </form>
+  </div>
+{{else}}
+  <button {{action 'reviewFormShow'}}>New Review</button>
+{{/if}}
+```
+
+<div class="filename">app/components/new-review.js</div>
+```javascript
+import Ember from 'ember';
+
+export default Ember.Component.extend({
+  addNewReview: false,
+  actions: {
+    reviewFormShow() {
+      this.set('addNewReview', true);
+    },
+    saveReview() {
+     var params = {
+       author: this.get('author'),
+       rating: this.get('rating'),
+       content: this.get('content')
+     };
+     this.set('addNewReview', false);
+     this.sendAction('saveReview', params);
+   }
+  }
+});
+```
+
+We also need the _saveReview_ action in the index route handler:
+
+<div class="filename">app/routes/index.js</div>
+```javascript
+import Ember from 'ember';
+
+export default Ember.Route.extend({
+  model() {
+    return Ember.RSVP.hash({
+      rentals: this.store.findAll('rental'),
+      reviews: this.store.findAll('review')
+    });
+  },
+  actions: {
+    saveRental3(params) {
+      var newRental = this.store.createRecord('rental', params);
+      newRental.save();
+      this.transitionTo('index');
+    },
+    saveReview(params) {
+      var newReview = this.store.createRecord('review', params);
+      newReview.save();
+      this.transitionTo('index');
+    }
+  }
+});
+```
+
+
+And add a link on the index page to the _new-review_ component:
+
+<div class="filename">app/templates/index.hbs</div>
+```html
+<h1> Welcome to Super Rentals </h1>
+
+We hope you find exactly what you're looking for in a place to stay.
+
+<h2> Available Rentals </h2>
+
+<ul>
+  {{#each model.rentals as |rental|}}
+    {{rental-tile rental=rental}}
+  {{/each}}
+</ul>
+
+{{new-rental saveRental2="saveRental3"}}
+
+<h2> All Reviews </h2>
+
+<ul>
+  {{#each model.reviews as |review|}}
+    <li>{{review.rating}} - {{review.content}} - by {{review.author}}</li>
+  {{/each}}
+</ul>
+
+{{new-review saveReview="saveReview"}}
+
+<hr>
+
+{{#link-to 'about'}}About{{/link-to}}
+{{#link-to 'contact'}}Click here to contact us.{{/link-to}}
+```
+
 ## Next Steps
 
-Now it's your turn! Tomorrow we will begin class by creating a `new-review` component. This component will be rendered in the index template, and will be responsible for creating new `review` objects through our application.
-
-Then, in the next lesson we'll explore creating a one-to-many relationship between these objects, so that reviews can belong to a specific rental.
+In the next lesson we'll explore creating a one-to-many relationship between rental objects and review objects, so that reviews can belong to a specific rental.
 
 <hr>
 

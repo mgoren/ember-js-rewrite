@@ -142,7 +142,7 @@ We hope you find exactly what you're looking for in a place to stay.
   {{/each}}
 </ul>
 
-{{new-rental save2="save3"}}
+{{new-rental saveRental2="saveRental3"}}
 
 {{#link-to 'about'}}About{{/link-to}}
 {{#link-to 'contact'}}Click here to contact us.{{/link-to}}
@@ -162,7 +162,7 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    save3(params) {
+    saveRental3(params) {
       var newRental = this.store.createRecord('rental', params);
       newRental.save();
       this.transitionTo('index');

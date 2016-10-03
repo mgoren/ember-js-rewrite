@@ -61,7 +61,7 @@ Rentals available in {{city.name}}:
 <div class="filename">app/components/new-rental.js</div>
 ```javascript
 ...
-    save1() {
+    saveRental1() {
       var params = {
         owner: this.get('owner'),
         city: this.get('city'),
@@ -71,7 +71,7 @@ Rentals available in {{city.name}}:
         cost: parseInt(this.get('cost'))
       };
       this.set('addNewRental', false);
-      this.sendAction('save2', params);
+      this.sendAction('saveRental2', params);
     }
 ...
 ```

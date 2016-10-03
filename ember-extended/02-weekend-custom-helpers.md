@@ -113,7 +113,7 @@ Next, we’ll include a cost field in our new rental form:
           {{input value=cost id="cost"}}
         </div>
 
-        <button {{action 'save1'}}>Save</button>
+        <button {{action 'saveRental1'}}>Save</button>
       </form>
     </div>
 {{else}}
@@ -121,7 +121,7 @@ Next, we’ll include a cost field in our new rental form:
 {{/if}}
 ```
 
-Lastly, let’s make sure the `save1()` action on the `new-rental` component also includes our new `cost `property.  _(We'll also need to include it in any update forms and actions, but we won't explicitly cover that here.)_ We'll also parse the value into an Integer:
+Lastly, let’s make sure the `saveRental1()` action on the `new-rental` component also includes our new `cost `property.  _(We'll also need to include it in any update forms and actions, but we won't explicitly cover that here.)_ We'll also parse the value into an Integer:
 
 <div class="filename">app/components/new-rental.js</div>
 ```
@@ -134,7 +134,7 @@ export default Ember.Component.extend({
       this.set('addNewRental', true);
     },
 
-    save1() {
+    saveRental1() {
       var params = {
         owner: this.get('owner'),
         city: this.get('city'),
@@ -144,7 +144,7 @@ export default Ember.Component.extend({
         cost: parseInt(this.get('cost'))
       };
       this.set('addNewRental', false);
-      this.sendAction('save2', params);
+      this.sendAction('saveRental2', params);
     }
   }
 });

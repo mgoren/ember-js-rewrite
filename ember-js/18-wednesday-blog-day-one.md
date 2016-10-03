@@ -12,11 +12,7 @@
 
 ### Property Rental Application
 
-At the beginning of each day, follow along with the previous night's homework to implement new features and concepts into our Super-Rentals application. Then, add the features described below. Make sure these features function correctly before moving on to the Blog project, as future lessons that build upon Super-Rentals will assume these elements are present.
-
-* Create a `new-review` component to handle creating and saving new review objects in your Firebase database.
-* Render it in the index template, ensuring the index route handler contains all necessary actions to save new reviews.
-* Hint:  Use [previous lessons](https://www.learnhowtoprogram.com/javascript/ember-js/components-save-delete) and the existing `new-rental` component as guides.
+At the beginning of each day, follow along with the previous night's homework to implement new features and concepts into our Super-Rentals application.
 
 <hr>
 

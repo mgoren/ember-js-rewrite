@@ -38,7 +38,7 @@ In the corresponding `city` template we include a `city-tile` component and a `n
 
 {{city-tile city=model destroyCity="destroyCity"}}
 
-{{new-rental save2="save3" city=model}}
+{{new-rental saveRental2="saveRental3" city=model}}
 ```
 
 The `city-tile` component shows basic information on the city:
